@@ -22,13 +22,13 @@ Actor has been known to exploit the vulnerabilities existing in internet-facing 
 
 There are total of four vulnerabilities that have been reported. These all have been classified as Critical and need to be updated at the earliest.
 
-CVE-2021-26855 (CVSS:3.0 9.1) is a server-side request forgery (SSRF) vulnerability in Exchange which allowed the attacker to send arbitrary HTTP requests and authenticate as the Exchange server. This would also allow the attacker to gain access to mailboxes and read sensitive information
+**CVE-2021-26855 (CVSS:3.0 9.1)** is a server-side request forgery (SSRF) vulnerability in Exchange which allowed the attacker to send arbitrary HTTP requests and authenticate as the Exchange server. This would also allow the attacker to gain access to mailboxes and read sensitive information
 
-CVE-2021-26857 (CVSS:3.0 7.8) is an insecure deserialization vulnerability in the Unified Messaging service. Insecure deserialization is where untrusted user-controllable data is deserialized by a program. Exploiting this vulnerability gave HAFNIUM the ability to run code as SYSTEM on the Exchange server. This requires administrator permission or another vulnerability to exploit.
+**CVE-2021-26857 (CVSS:3.0 7.8)** is an insecure deserialization vulnerability in the Unified Messaging service. Insecure deserialization is where untrusted user-controllable data is deserialized by a program. Exploiting this vulnerability gave HAFNIUM the ability to run code as SYSTEM on the Exchange server. This requires administrator permission or another vulnerability to exploit.
 
-CVE-2021-26858 (CVSS:3.0 7.8) is a post-authentication arbitrary file write vulnerability in Exchange. If HAFNIUM could authenticate with the Exchange server then they could use this vulnerability to write a file to any path on the server. They could authenticate by exploiting the CVE-2021-26855 SSRF vulnerability or by compromising a legitimate admin’s credentials.
+**CVE-2021-26858 (CVSS:3.0 7.8)** is a post-authentication arbitrary file write vulnerability in Exchange. If HAFNIUM could authenticate with the Exchange server then they could use this vulnerability to write a file to any path on the server. They could authenticate by exploiting the CVE-2021-26855 SSRF vulnerability or by compromising a legitimate admin’s credentials.
 
-CVE-2021-27065 (CVSS:3.0 7.8) is a post-authentication arbitrary file write vulnerability in Exchange. If HAFNIUM could authenticate with the Exchange server then they could use this vulnerability to write a file to any path on the server. They could authenticate by exploiting the CVE-2021-26855 SSRF vulnerability or by compromising a legitimate admin’s credentials.
+**CVE-2021-27065 (CVSS:3.0 7.8)** is a post-authentication arbitrary file write vulnerability in Exchange. If HAFNIUM could authenticate with the Exchange server then they could use this vulnerability to write a file to any path on the server. They could authenticate by exploiting the CVE-2021-26855 SSRF vulnerability or by compromising a legitimate admin’s credentials.
 
 **Technical Details**
 
@@ -36,10 +36,10 @@ Volexity has observed different techniques and tactics used by the threat actors
 
 **Malicious Directories**
 1. /owa/auth/current/themes/resources
-C:\inetpub\wwwroot\aspnet_client\
-C:\inetpub\wwwroot\aspnet_client\system_web\
-*exchange install path*\FrontEnd\HttpProxy\ecp\auth\ (Only TimeoutLogoff.aspx file should be present)
-*exchange install path*\FrontEnd\HttpProxy\owa\auth\ (any non-standard file)
+2. C:\inetpub\wwwroot\aspnet_client\
+3. C:\inetpub\wwwroot\aspnet_client\system_web\
+4. *exchange install path*\FrontEnd\HttpProxy\ecp\auth\ (Only TimeoutLogoff.aspx file should be present)
+5. *exchange install path*\FrontEnd\HttpProxy\owa\auth\ (any non-standard file)
 
 **WEB shells**
 There are many web shells observed during the attacks and should be searched in the environment using the following query. Query needs to be tweaked according the tool being used for the investigation.
@@ -50,21 +50,21 @@ There are many web shells observed during the attacks and should be searched in 
 
 The web shells detected had the following file names: 
 
-web.aspx
-help.aspx
-document.aspx
-errorEE.aspx
-errorEEE.aspx
-errorEW.aspx
-errorFF.aspx
-healthcheck.aspx
-aspnet_www.aspx
-aspnet_client.aspx
-xx.aspx
-shell.aspx
-aspnet_iisstart.aspx
-one.aspx
-<single character>.js
+1. web.aspx
+2. help.aspx
+3. document.aspx
+4. errorEE.aspx
+5. errorEEE.aspx
+6. errorEW.aspx
+7. errorFF.aspx
+8. healthcheck.aspx
+9. aspnet_www.aspx
+10. aspnet_client.aspx
+11. xx.aspx
+12. shell.aspx
+13. aspnet_iisstart.aspx
+14. one.aspx
+15. <single character>.js
 
 
 **Suspicious User Agents:**
@@ -77,35 +77,34 @@ python-requests/2.25.1
 **Malicious IPs:**
 Following IPs should be investigated for any malicious connections, however this is not a complete list since the exploit can be launched from any other IP.
 
-103.77.192[.]219
-104.140.114[.]110
-104.250.191[.]110
-108.61.246[.]56
-149.28.14[.]163
-157.230.221[.]198
-167.99.168[.]251
-185.250.151[.]72
-192.81.208[.]169
-203.160.69[.]66
-211.56.98[.]146
-5.254.43[.]18
-5.2.69[.]14
-80.92.205[.]81
-91.192.103[.]43
+1. 103.77.192[.]219
+2. 104.140.114[.]110
+3. 104.250.191[.]110
+4. 108.61.246[.]56
+5. 149.28.14[.]163
+6. 157.230.221[.]198
+7. 167.99.168[.]251
+8. 185.250.151[.]72
+9. 192.81.208[.]169
+10. 203.160.69[.]66
+11. 211.56.98[.]146
+12. 5.254.43[.]18
+13. 5.2.69[.]14
+14. 80.92.205[.]81
+15. 91.192.103[.]43
 
 **Investigation Tips**
 We recommend checking the following for potential evidence of compromise:
 
-Child processes of C:\Windows\System32\inetsrv\w3wp.exe on Exchange Servers, particularly cmd.exe.
-Files written to the system by w3wp.exe or UMWorkerProcess.exe.
-ASPX files owned by the SYSTEM user
-New, unexpected compiled ASPX files in the Temporary ASP.NET Files directory
-Reconnaissance, vulnerability-testing requests to the following resources from an external IP address:
-/rpc/ directory
-/ecp/DDI/DDIService.svc/SetObject
-Non-existent resources
-With suspicious or spoofed HTTP User-Agents
-Unexpected or suspicious Exchange PowerShell SnapIn requests to export mailboxes
+1. Child processes of C:\Windows\System32\inetsrv\w3wp.exe on Exchange Servers, particularly cmd.exe.
+2. Files written to the system by w3wp.exe or UMWorkerProcess.exe.
+3. ASPX files owned by the SYSTEM user
+4. New, unexpected compiled ASPX files in the Temporary ASP.NET Files directory
+5. Reconnaissance, vulnerability-testing requests to the following resources from an external IP address:
+	/rpc/ directory
+	/ecp/DDI/DDIService.svc/SetObject
+	Non-existent resources With suspicious or spoofed HTTP User-Agents
+6. Unexpected or suspicious Exchange PowerShell SnapIn requests to export mailboxes
 
 
 **Remediation**
