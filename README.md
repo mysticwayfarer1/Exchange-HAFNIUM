@@ -64,7 +64,7 @@ The web shells detected had the following file names:
 12. shell.aspx
 13. aspnet_iisstart.aspx
 14. one.aspx
-15. <single character>.js
+15. single character.js
 
 
 **Suspicious User Agents:**
